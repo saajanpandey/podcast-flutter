@@ -6,7 +6,10 @@ import 'package:podcast/cubit/authUser/authuserdata_cubit.dart';
 import 'package:podcast/cubit/login/login_cubit.dart';
 import 'package:podcast/cubit/loginStatus/checkloginstatus_cubit.dart';
 import 'package:podcast/cubit/logout/logout_cubit.dart';
+import 'package:podcast/cubit/podcast/podcast_cubit.dart';
+import 'package:podcast/cubit/profileImage/profile_image_cubit.dart';
 import 'package:podcast/cubit/register/register_cubit.dart';
+import 'package:podcast/cubit/userUpdate/userupdate_cubit.dart';
 import 'package:podcast/screens/splash.dart';
 import 'package:podcast/services/ApiService.dart';
 
@@ -48,6 +51,9 @@ class BlocDefine extends StatelessWidget {
               create: (context) => AuthuserdataCubit()..authUserCall()),
           BlocProvider(create: (context) => CheckloginstatusCubit()),
           BlocProvider(create: (context) => LogoutCubit()),
+          BlocProvider(create: (context) => UserupdateCubit()),
+          BlocProvider(create: (context) => ProfileImageCubit()),
+          BlocProvider(create: (context) => PodcastCubit()),
         ],
         child: const MyApp(),
       ),

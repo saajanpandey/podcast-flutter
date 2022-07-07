@@ -4,7 +4,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:podcast/cubit/authUser/authuserdata_cubit.dart';
 import 'package:podcast/cubit/logout/logout_cubit.dart';
+import 'package:podcast/cubit/userUpdate/userupdate_cubit.dart';
+import 'package:podcast/screens/bottomNavigation.dart';
 import 'package:podcast/screens/login.dart';
+import 'package:podcast/screens/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -16,11 +19,13 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   String? message;
-  String? name = '';
-  String? avatar = '';
+  String? name;
+  String? avatar;
   int? gender;
+  String? email;
   @override
   void initState() {
+    BlocProvider.of<AuthuserdataCubit>(context).authUserCall();
     checksharedvalue();
     super.initState();
   }
@@ -63,103 +68,158 @@ class _SettingsPageState extends State<SettingsPage> {
             }
             if (state is LogoutSuccess) {
               message = state.logoutModal.message;
-              Future.delayed(const Duration(seconds: 3), () {
-                EasyLoading.dismiss();
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
-                    (route) => false);
-                errorAlertBox(message);
-              });
+              Future.delayed(
+                const Duration(seconds: 3),
+                () {
+                  EasyLoading.dismiss();
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                      (route) => false);
+                  errorAlertBox(message);
+                },
+              );
             }
           },
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Column(
-                  children: [
-                    BlocBuilder<AuthuserdataCubit, AuthuserdataState>(
-                      builder: (context, state) {
-                        if (state is AuthuserdataFetched) {
-                          avatar = state.authData.avatar;
-                          name = state.authData.name;
-                          gender = state.authData.gender;
-                          if (avatar != null) {
-                            return ListTile(
-                              leading: CircleAvatar(
-                                radius: 48, // Image radius
-                                backgroundImage: NetworkImage("$avatar"),
-                              ),
-                              title: Text('$name'),
-                              subtitle: const Text('View Profile'),
-                              trailing: const Icon(FontAwesomeIcons.arrowRight),
+                BlocBuilder<AuthuserdataCubit, AuthuserdataState>(
+                  builder: (context, state) {
+                    if (state is AuthuserdataFetching) {
+                      fetchAlertBox();
+                    }
+                    if (state is AuthuserdataFetched) {
+                      EasyLoading.dismiss();
+                      avatar = state.authData.avatar;
+                      name = state.authData.name;
+                      gender = state.authData.gender;
+                      email = state.authData.email;
+                      if (avatar == 'null' && gender == 1) {
+                        return ListTile(
+                          leading: const CircleAvatar(
+                            radius: 48, // Image radius
+                            backgroundImage:
+                                AssetImage('assets/images/maleAvatar.jpg'),
+                          ),
+                          title: Text('$name'),
+                          subtitle: const Text('View Profile'),
+                          trailing: const Icon(FontAwesomeIcons.arrowRight),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfilePage()),
                             );
-                          } else if (avatar == null && gender == 1) {
-                            return ListTile(
-                              style: ListTileStyle.list,
-                              leading: const CircleAvatar(
-                                radius: 48, // Image radius
-                                backgroundImage:
-                                    AssetImage('assets/images/maleAvatar.jpg'),
-                              ),
-                              title: Text('$name'),
-                              subtitle: const Text('View Profile'),
-                              trailing: const Icon(FontAwesomeIcons.arrowRight),
+                          },
+                        );
+                      } else if (avatar == 'null' && gender == 0) {
+                        return ListTile(
+                          leading: const CircleAvatar(
+                            radius: 48, // Image radius
+                            backgroundImage:
+                                AssetImage('assets/images/femaleAvatar.png'),
+                          ),
+                          title: Text('$name'),
+                          subtitle: const Text('View Profile'),
+                          trailing: const Icon(FontAwesomeIcons.arrowRight),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfilePage()),
                             );
-                          } else {
-                            return ListTile(
-                              leading: const CircleAvatar(
-                                radius: 48, // Image radius
-                                backgroundImage: AssetImage(
-                                    'assets/images/femaleAvatar.jpg'),
-                              ),
-                              title: Text('$name'),
-                              subtitle: const Text('View Profile'),
-                              trailing: const Icon(FontAwesomeIcons.arrowRight),
+                          },
+                        );
+                      } else {
+                        return ListTile(
+                          style: ListTileStyle.list,
+                          leading: CircleAvatar(
+                            radius: 48, // Image radius
+                            backgroundImage: NetworkImage("$avatar"),
+                          ),
+                          title: Text('$name'),
+                          subtitle: const Text('View Profile'),
+                          trailing: const Icon(FontAwesomeIcons.arrowRight),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfilePage()),
                             );
-                          }
-                        } else {
-                          return const ListTile(
-                            leading: CircleAvatar(
-                              radius: 48, // Image radius
-                              backgroundImage:
-                                  AssetImage("assets/images/logo1.png"),
-                            ),
-                            title: Text('John Doe'),
-                            subtitle: Text('View Profile'),
-                            trailing: Icon(FontAwesomeIcons.arrowRight),
-                          );
-                        }
-                      },
-                    ),
-                  ],
+                          },
+                        );
+                      }
+                    } else {
+                      return ListTile(
+                        style: ListTileStyle.list,
+                        leading: const CircleAvatar(
+                          radius: 48, // Image radius
+                          backgroundImage:
+                              AssetImage('assets/images/maleAvatar.jpg'),
+                        ),
+                        title: Text('$name'),
+                        subtitle: const Text('View Profile'),
+                        trailing: const Icon(FontAwesomeIcons.arrowRight),
+                      );
+                    }
+                  },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                ListTile(
-                  leading: const Padding(
-                    padding: EdgeInsets.only(left: 36.0),
-                    child: Icon(
-                      FontAwesomeIcons.arrowRightFromBracket,
-                      color: Colors.purple,
-                    ),
-                  ),
-                  title: const Padding(
-                    padding: EdgeInsets.only(left: 35.0),
-                    child: Text(
-                      'Logout',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                    ),
-                  ),
-                  subtitle: Padding(
-                    padding: const EdgeInsets.only(left: 35.0),
-                    child: Text('You are logged in as $name'),
-                  ),
-                  onTap: () {
-                    BlocProvider.of<LogoutCubit>(context).logout();
+                BlocBuilder<AuthuserdataCubit, AuthuserdataState>(
+                  builder: (context, state) {
+                    return ListTile(
+                      leading: const Padding(
+                        padding: EdgeInsets.only(left: 36.0),
+                        child: Icon(
+                          FontAwesomeIcons.envelope,
+                          color: Colors.purple,
+                        ),
+                      ),
+                      title: const Padding(
+                        padding: EdgeInsets.only(left: 35.0),
+                        child: Text(
+                          'Email',
+                        ),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(left: 35.0),
+                        child: Text('$email'),
+                      ),
+                    );
                   },
-                  onLongPress: () {},
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                BlocBuilder<AuthuserdataCubit, AuthuserdataState>(
+                  builder: (context, state) {
+                    return ListTile(
+                      leading: const Padding(
+                        padding: EdgeInsets.only(left: 36.0),
+                        child: Icon(
+                          FontAwesomeIcons.arrowRightFromBracket,
+                          color: Colors.purple,
+                        ),
+                      ),
+                      title: const Padding(
+                        padding: EdgeInsets.only(left: 35.0),
+                        child: Text(
+                          'Logout',
+                        ),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(left: 35.0),
+                        child: Text('You are logged in as $name'),
+                      ),
+                      onTap: () {
+                        BlocProvider.of<LogoutCubit>(context).logout();
+                      },
+                      onLongPress: () {},
+                    );
+                  },
                 ),
               ],
             ),
@@ -171,6 +231,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
   loadingAlertBox() {
     EasyLoading.show(status: 'Logging Out...');
+  }
+
+  fetchAlertBox() {
+    EasyLoading.show(status: 'Fetching User Information....');
   }
 
   errorAlertBox(message) {

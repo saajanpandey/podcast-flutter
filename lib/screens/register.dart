@@ -23,7 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   var dateOfBirth = TextEditingController();
 
   bool obsecure = true;
-  final List<String> genderItems = ['Male', 'Female', 'Other'];
+  final List<String> genderItems = ['Male', 'Female'];
 
   String? selectedValue;
   int? gender;
@@ -62,22 +62,41 @@ class _RegisterPageState extends State<RegisterPage> {
             if (state is RegisterError) {
               EasyLoading.dismiss();
               errorMsg = state.registerModal.errors?.email?.first;
-              Alert(
-                context: context,
-                title: "Error",
-                desc: "$errorMsg",
-                buttons: [
-                  DialogButton(
-                    color: Colors.purple,
-                    child: const Text(
-                      "Dismiss",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+              if (errorMsg != null) {
+                Alert(
+                  context: context,
+                  title: "Error",
+                  desc: "$errorMsg",
+                  buttons: [
+                    DialogButton(
+                      color: Colors.purple,
+                      onPressed: () => Navigator.pop(context),
+                      width: 120,
+                      child: const Text(
+                        "Dismiss",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
                     ),
-                    onPressed: () => Navigator.pop(context),
-                    width: 120,
-                  ),
-                ],
-              ).show();
+                  ],
+                ).show();
+              } else {
+                Alert(
+                  context: context,
+                  title: "Error",
+                  desc: "Something Went Wrong",
+                  buttons: [
+                    DialogButton(
+                      color: Colors.purple,
+                      onPressed: () => Navigator.pop(context),
+                      width: 120,
+                      child: const Text(
+                        "Dismiss",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  ],
+                ).show();
+              }
             }
           },
           child: Center(
@@ -146,6 +165,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             if (value!.isEmpty) {
                               return "Please select a date.";
                             }
+                            return null;
                           },
                         ),
                         const SizedBox(
@@ -174,8 +194,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 gender = 1;
                               } else if (selectedValue == 'Female') {
                                 gender = 0;
-                              } else {
-                                gender = 2;
                               }
                             });
                           },
