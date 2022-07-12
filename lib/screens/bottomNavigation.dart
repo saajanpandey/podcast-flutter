@@ -1,7 +1,9 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:podcast/screens/favourite.dart';
 import 'package:podcast/screens/home.dart';
+import 'package:podcast/screens/search.dart';
 import 'package:podcast/screens/settings.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
@@ -73,6 +75,14 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
       if (index == 0) {
         setState(() {
           currentPage = const HomePage();
+        });
+      } else if (index == 1) {
+        setState(() {
+          currentPage = const SearchPage();
+        });
+      } else if (index == 2) {
+        setState(() {
+          currentPage = const FavouritesPage();
         });
       } else if (index == 3) {
         setState(() {

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:podcast/cubit/podcast/podcast_cubit.dart';
+import 'package:podcast/screens/player.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     BlocProvider.of<PodcastCubit>(context).fetchPodcastData();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -28,9 +27,9 @@ class _HomePageState extends State<HomePage> {
           physics: const BouncingScrollPhysics(),
           child: BlocBuilder<PodcastCubit, PodcastState>(
             builder: (context, state) {
-              if (state is PodcastFetching) {
-                loadingAlertBox();
-              }
+              // if (state is PodcastFetching) {
+              //   loadingAlertBox();
+              // }
               if (state is PodcastFetched) {
                 EasyLoading.dismiss();
                 return Container(
@@ -41,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                       return Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(15.0),
+                            padding: const EdgeInsets.all(10),
                             child: Card(
                               clipBehavior: Clip.antiAlias,
                               elevation: 8,
@@ -50,29 +49,45 @@ class _HomePageState extends State<HomePage> {
                               ),
                               child: Column(
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: ListTile(
-                                      leading: CircleAvatar(
-                                        maxRadius: 20,
-                                        backgroundImage: NetworkImage(
-                                            '${state.podcastdata[index].image}'),
-                                      ),
-                                      title: Text(
-                                          '${state.podcastdata[index].title}'),
-                                      trailing: PopupMenuButton(
-                                        icon: const Icon(Icons.more_vert),
-                                        itemBuilder: (BuildContext context) =>
-                                            <PopupMenuEntry>[
-                                          const PopupMenuItem(
-                                            child: ListTile(
-                                              leading:
-                                                  Icon(FontAwesomeIcons.heart),
-                                              title: Text('Like'),
-                                            ),
+                                  ListTile(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => PodcastPlayer(
+                                            title:
+                                                '${state.podcastdata[index].title}',
+                                            artist:
+                                                '${state.podcastdata[index].artist}',
+                                            category:
+                                                '${state.podcastdata[index].category}',
+                                            image:
+                                                '${state.podcastdata[index].image}',
+                                            audio:
+                                                '${state.podcastdata[index].audio}',
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      );
+                                    },
+                                    leading: CircleAvatar(
+                                      maxRadius: 20,
+                                      backgroundImage: NetworkImage(
+                                          '${state.podcastdata[index].image}'),
+                                    ),
+                                    title: Text(
+                                        '${state.podcastdata[index].title}'),
+                                    trailing: PopupMenuButton(
+                                      icon: const Icon(Icons.more_vert),
+                                      itemBuilder: (BuildContext context) =>
+                                          <PopupMenuEntry>[
+                                        const PopupMenuItem(
+                                          child: ListTile(
+                                            leading:
+                                                Icon(FontAwesomeIcons.heart),
+                                            title: Text('Like'),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -84,9 +99,25 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 );
+              } else if (state is PodcastFetching) {
+                loadingAlertBox();
+                return Container();
               } else {
-                return Container(
-                  child: Text('Hello'),
+                EasyLoading.dismiss();
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 250),
+                        child: Text(
+                          "Something Went Wrong!",
+                          style: TextStyle(color: Colors.purple, fontSize: 30),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               }
             },

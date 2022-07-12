@@ -4,8 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:podcast/cubit/authUser/authuserdata_cubit.dart';
 import 'package:podcast/cubit/logout/logout_cubit.dart';
-import 'package:podcast/cubit/userUpdate/userupdate_cubit.dart';
-import 'package:podcast/screens/bottomNavigation.dart';
+import 'package:podcast/screens/feedback.dart';
 import 'package:podcast/screens/login.dart';
 import 'package:podcast/screens/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -84,10 +83,14 @@ class _SettingsPageState extends State<SettingsPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                const SizedBox(
+                  height: 50,
+                ),
                 BlocBuilder<AuthuserdataCubit, AuthuserdataState>(
                   builder: (context, state) {
                     if (state is AuthuserdataFetching) {
                       fetchAlertBox();
+                      return Container();
                     }
                     if (state is AuthuserdataFetched) {
                       EasyLoading.dismiss();
@@ -98,7 +101,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       if (avatar == 'null' && gender == 1) {
                         return ListTile(
                           leading: const CircleAvatar(
-                            radius: 48, // Image radius
+                            radius: 28, // Image radius
                             backgroundImage:
                                 AssetImage('assets/images/maleAvatar.jpg'),
                           ),
@@ -116,7 +119,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       } else if (avatar == 'null' && gender == 0) {
                         return ListTile(
                           leading: const CircleAvatar(
-                            radius: 48, // Image radius
+                            radius: 28, // Image radius
                             backgroundImage:
                                 AssetImage('assets/images/femaleAvatar.png'),
                           ),
@@ -132,29 +135,32 @@ class _SettingsPageState extends State<SettingsPage> {
                           },
                         );
                       } else {
-                        return ListTile(
-                          style: ListTileStyle.list,
-                          leading: CircleAvatar(
-                            radius: 48, // Image radius
-                            backgroundImage: NetworkImage("$avatar"),
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 24),
+                          child: ListTile(
+                            style: ListTileStyle.list,
+                            leading: CircleAvatar(
+                              radius: 28, // Image radius
+                              backgroundImage: NetworkImage("$avatar"),
+                            ),
+                            title: Text('$name'),
+                            subtitle: const Text('View Profile'),
+                            trailing: const Icon(FontAwesomeIcons.arrowRight),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfilePage()),
+                              );
+                            },
                           ),
-                          title: Text('$name'),
-                          subtitle: const Text('View Profile'),
-                          trailing: const Icon(FontAwesomeIcons.arrowRight),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfilePage()),
-                            );
-                          },
                         );
                       }
                     } else {
                       return ListTile(
                         style: ListTileStyle.list,
                         leading: const CircleAvatar(
-                          radius: 48, // Image radius
+                          radius: 28, // Image radius
                           backgroundImage:
                               AssetImage('assets/images/maleAvatar.jpg'),
                         ),
@@ -191,9 +197,35 @@ class _SettingsPageState extends State<SettingsPage> {
                     );
                   },
                 ),
-                const SizedBox(
-                  height: 20,
+                ListTile(
+                  leading: const Padding(
+                    padding: EdgeInsets.only(left: 36.0),
+                    child: Icon(
+                      Icons.feedback,
+                      color: Colors.purple,
+                    ),
+                  ),
+                  title: const Padding(
+                    padding: EdgeInsets.only(left: 35.0),
+                    child: Text('Feedback'),
+                  ),
+                  subtitle: const Padding(
+                    padding: EdgeInsets.only(left: 35.0),
+                    child: Text('Provide Your Feedback'),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FeedBackPage(
+                                email: email,
+                              )),
+                    );
+                  },
                 ),
+                // const SizedBox(
+                //   height: 20,
+                // ),
                 BlocBuilder<AuthuserdataCubit, AuthuserdataState>(
                   builder: (context, state) {
                     return ListTile(

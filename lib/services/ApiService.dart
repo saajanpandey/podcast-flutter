@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:podcast/modal/AuthUserModal.dart';
+import 'package:podcast/modal/FeedbackModal.dart';
 import 'package:podcast/modal/LoginModal.dart';
 import 'package:podcast/modal/LogoutModal.dart';
 import 'package:podcast/modal/PodcastModal.dart';
@@ -167,6 +168,49 @@ class ApiService {
       final dio = Dio()
         ..interceptors.add(DioCacheInterceptor(options: optionsdata));
       var response = await dio.get('http://10.0.2.2:8000/api/v1/podcasts',
+          options: Options(headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token'
+          }));
+
+      List<dynamic> list = response.data['data'];
+      var returnresponse = list.map((e) => PodcastModal.fromJson(e)).toList();
+      return returnresponse;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<FeedbackModal?> feedbackregister(email, title, message) async {
+    var token = await StorageService().getLoginToken();
+    FormData formdata = FormData.fromMap({
+      "email": email,
+      "title": title,
+      "message": message,
+    });
+    try {
+      var response = await Dio().post('http://10.0.2.2:8000/api/v1/feedback',
+          data: formdata,
+          options: Options(headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token'
+          }));
+      var dataResponse = FeedbackModal.fromJson(response.data);
+      return dataResponse;
+    } on DioError catch (e) {
+      return FeedbackModal.fromJson(e.response?.data);
+    }
+  }
+
+  Future<List<PodcastModal>?> favouriteApi() async {
+    var token = await StorageService().getLoginToken();
+
+    try {
+      final dio = Dio()
+        ..interceptors.add(DioCacheInterceptor(options: optionsdata));
+      var response = await dio.get('http://10.0.2.2:8000/api/v1/user-favourite',
           options: Options(headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',

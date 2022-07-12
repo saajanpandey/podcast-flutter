@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podcast/cubit/authUser/authuserdata_cubit.dart';
+import 'package:podcast/cubit/favourite/favourite_cubit.dart';
+import 'package:podcast/cubit/feedback/feedback_cubit.dart';
 import 'package:podcast/cubit/login/login_cubit.dart';
 import 'package:podcast/cubit/loginStatus/checkloginstatus_cubit.dart';
 import 'package:podcast/cubit/logout/logout_cubit.dart';
@@ -54,6 +56,8 @@ class BlocDefine extends StatelessWidget {
           BlocProvider(create: (context) => UserupdateCubit()),
           BlocProvider(create: (context) => ProfileImageCubit()),
           BlocProvider(create: (context) => PodcastCubit()),
+          BlocProvider(create: (context) => FeedbackCubit()),
+          BlocProvider(create: (context) => FavouriteCubit())
         ],
         child: const MyApp(),
       ),

@@ -9,7 +9,6 @@ import 'package:podcast/cubit/profileImage/profile_image_cubit.dart';
 import 'package:podcast/screens/bottomNavigation.dart';
 import 'package:podcast/screens/editProfile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:podcast/screens/settings.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -109,7 +108,37 @@ class _ProfilePageState extends State<ProfilePage> {
                                     child: image == null
                                         ? Container(
                                             height: 250,
-                                            child: Image.network('$avatar'),
+                                            child: Stack(
+                                              children: [
+                                                Center(
+                                                    child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          100),
+                                                  child:
+                                                      Image.network('$avatar'),
+                                                )),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    buttonActionSheet();
+                                                  },
+                                                  child: const Align(
+                                                    alignment:
+                                                        Alignment.bottomRight,
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              0, 0, 130, 10),
+                                                      child: Icon(
+                                                        FontAwesomeIcons.camera,
+                                                        size: 30,
+                                                        color: Colors.purple,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           )
                                         : Container(
                                             child: Image.file(
