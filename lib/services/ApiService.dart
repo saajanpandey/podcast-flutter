@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:podcast/modal/AddFavouriteModal.dart';
 import 'package:podcast/modal/AuthUserModal.dart';
 import 'package:podcast/modal/FeedbackModal.dart';
 import 'package:podcast/modal/LoginModal.dart';
@@ -6,6 +7,7 @@ import 'package:podcast/modal/LogoutModal.dart';
 import 'package:podcast/modal/PodcastModal.dart';
 import 'package:podcast/modal/ProfileImageModal.dart';
 import 'package:podcast/modal/RegisterModal.dart';
+import 'package:podcast/modal/RemoveFavouriteModal.dart';
 import 'package:podcast/modal/UserProfileModal.dart';
 import 'package:podcast/services/StorageService.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
@@ -222,6 +224,44 @@ class ApiService {
       return returnresponse;
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<RemoveFavouriteModel?> removeFavourite(id) async {
+    String? podcastId = id;
+    var token = await StorageService().getLoginToken();
+    try {
+      var response = await Dio()
+          .delete('http://10.0.2.2:8000/api/v1/favourites/$podcastId',
+              options: Options(headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer $token'
+              }));
+      var dataResponse = RemoveFavouriteModel.fromJson(response.data);
+      return dataResponse;
+    } on DioError catch (e) {
+      return RemoveFavouriteModel.fromJson(e.response?.data);
+    }
+  }
+
+  Future<AddFavouriteModal>? addFavourite(podcastId) async {
+    var token = await StorageService().getLoginToken();
+    FormData formdata = FormData.fromMap({
+      "podcast_id": podcastId,
+    });
+    try {
+      var response = await Dio().post('http://10.0.2.2:8000/api/v1/favourites',
+          data: formdata,
+          options: Options(headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token'
+          }));
+      var dataResponse = AddFavouriteModal.fromJson(response.data);
+      return dataResponse;
+    } on DioError catch (e) {
+      return AddFavouriteModal.fromJson(e.response?.data);
     }
   }
 }

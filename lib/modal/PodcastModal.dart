@@ -6,6 +6,7 @@ class PodcastModal {
   String? artist;
   String? image;
   String? audio;
+  bool? favourite;
 
   PodcastModal(
       {this.id,
@@ -14,7 +15,8 @@ class PodcastModal {
       this.category,
       this.artist,
       this.image,
-      this.audio});
+      this.audio,
+      this.favourite});
 
   PodcastModal.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -24,5 +26,6 @@ class PodcastModal {
     artist = json['artist'];
     image = json['image'];
     audio = json['audio'];
+    favourite = json['favourite'];
   }
 }

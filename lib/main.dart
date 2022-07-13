@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
+import 'package:podcast/cubit/addFavourite/add_favourite_cubit.dart';
 import 'package:podcast/cubit/authUser/authuserdata_cubit.dart';
 import 'package:podcast/cubit/favourite/favourite_cubit.dart';
 import 'package:podcast/cubit/feedback/feedback_cubit.dart';
@@ -11,6 +12,7 @@ import 'package:podcast/cubit/logout/logout_cubit.dart';
 import 'package:podcast/cubit/podcast/podcast_cubit.dart';
 import 'package:podcast/cubit/profileImage/profile_image_cubit.dart';
 import 'package:podcast/cubit/register/register_cubit.dart';
+import 'package:podcast/cubit/removeFavourite/remove_favourite_cubit.dart';
 import 'package:podcast/cubit/userUpdate/userupdate_cubit.dart';
 import 'package:podcast/screens/splash.dart';
 import 'package:podcast/services/ApiService.dart';
@@ -57,7 +59,9 @@ class BlocDefine extends StatelessWidget {
           BlocProvider(create: (context) => ProfileImageCubit()),
           BlocProvider(create: (context) => PodcastCubit()),
           BlocProvider(create: (context) => FeedbackCubit()),
-          BlocProvider(create: (context) => FavouriteCubit())
+          BlocProvider(create: (context) => FavouriteCubit()),
+          BlocProvider(create: (context) => RemoveFavouriteCubit()),
+          BlocProvider(create: (context) => AddFavouriteCubit())
         ],
         child: const MyApp(),
       ),
