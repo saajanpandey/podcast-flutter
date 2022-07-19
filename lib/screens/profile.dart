@@ -111,13 +111,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                             child: Stack(
                                               children: [
                                                 Center(
-                                                    child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          100),
-                                                  child:
-                                                      Image.network('$avatar'),
-                                                )),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100),
+                                                    child: Image.network(
+                                                        '$avatar'),
+                                                  ),
+                                                ),
                                                 GestureDetector(
                                                   onTap: () {
                                                     buttonActionSheet();
@@ -174,10 +175,31 @@ class _ProfilePageState extends State<ProfilePage> {
                                       buttonActionSheet();
                                     },
                                     child: image == null
-                                        ? const CircleAvatar(
-                                            radius: 70, // Image radius
-                                            backgroundImage: AssetImage(
-                                                'assets/images/avatar.jpg'),
+                                        ? Stack(
+                                            children: const [
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    144, 0, 0, 0),
+                                                child: CircleAvatar(
+                                                  radius: 70, // Image radius
+                                                  backgroundImage: AssetImage(
+                                                      'assets/images/avatar.jpg'),
+                                                ),
+                                              ),
+                                              Align(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                child: Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      0, 105, 135, 0),
+                                                  child: Icon(
+                                                    FontAwesomeIcons.camera,
+                                                    size: 30,
+                                                    color: Colors.purple,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           )
                                         : Container(
                                             child: Image.file(
