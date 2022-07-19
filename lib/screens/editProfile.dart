@@ -28,9 +28,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final List<String> genderItems = ['Male', 'Female'];
 
   String? selectedValue;
-
-  final ImagePicker _picker = ImagePicker();
-  var image;
   String? avatar;
   String? name;
   int? gender;

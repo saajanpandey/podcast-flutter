@@ -245,7 +245,7 @@ class ApiService {
     }
   }
 
-  Future<AddFavouriteModal>? addFavourite(podcastId) async {
+  Future<AddFavouriteModal?> addFavourite(podcastId) async {
     var token = await StorageService().getLoginToken();
     FormData formdata = FormData.fromMap({
       "podcast_id": podcastId,
@@ -262,6 +262,25 @@ class ApiService {
       return dataResponse;
     } on DioError catch (e) {
       return AddFavouriteModal.fromJson(e.response?.data);
+    }
+  }
+
+  plays(podcastId) async {
+    var token = await StorageService().getLoginToken();
+    FormData formdata = FormData.fromMap({
+      "podcast_id": podcastId,
+    });
+    try {
+      var response = await Dio().post('http://10.0.2.2:8000/api/v1/plays',
+          data: formdata,
+          options: Options(headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token'
+          }));
+      return response;
+    } on DioError catch (e) {
+      return e;
     }
   }
 }

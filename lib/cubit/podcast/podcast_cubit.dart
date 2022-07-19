@@ -14,8 +14,10 @@ class PodcastCubit extends Cubit<PodcastState> {
 
     try {
       final response = await getIt<ApiService>().podcastApi();
-      if (response != null) {
-        emit(PodcastFetched(podcastdata: response));
+      if (response?.length != 0) {
+        if (response != null) {
+          emit(PodcastFetched(podcastdata: response));
+        }
       } else {
         emit(PodcastNull());
       }

@@ -53,80 +53,120 @@ class _FavouritesPageState extends State<FavouritesPage> {
                 }
                 if (state is FavouriteFetched) {
                   EasyLoading.dismiss();
-                  return Container(
-                    height: MediaQuery.of(context).size.height * 0.82,
-                    child: ListView.builder(
-                      itemCount: state.podcastdata.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Card(
-                                clipBehavior: Clip.antiAlias,
-                                elevation: 8,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(24),
-                                ),
-                                child: Column(
-                                  children: [
-                                    ListTile(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => PodcastPlayer(
-                                              title:
-                                                  '${state.podcastdata[index].title}',
-                                              artist:
-                                                  '${state.podcastdata[index].artist}',
-                                              category:
-                                                  '${state.podcastdata[index].category}',
-                                              image:
-                                                  '${state.podcastdata[index].image}',
-                                              audio:
-                                                  '${state.podcastdata[index].audio}',
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      leading: CircleAvatar(
-                                        maxRadius: 20,
-                                        backgroundImage: NetworkImage(
-                                            '${state.podcastdata[index].image}'),
-                                      ),
-                                      title: Text(
-                                          '${state.podcastdata[index].title}'),
-                                      trailing: PopupMenuButton(
-                                        icon: const Icon(Icons.more_vert),
-                                        itemBuilder: (BuildContext context) =>
-                                            <PopupMenuEntry>[
-                                          PopupMenuItem(
-                                            child: const ListTile(
-                                              leading: Icon(FontAwesomeIcons
-                                                  .heartCircleCheck),
-                                              title: Text('Liked'),
-                                            ),
-                                            onTap: () {
-                                              id =
-                                                  '${state.podcastdata[index].id}';
-                                              BlocProvider.of<
-                                                          RemoveFavouriteCubit>(
-                                                      context)
-                                                  .remove(id);
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                  return Column(
+                    children: [
+                      const Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(15, 20, 0, 0),
+                          child: Text(
+                            "Your Favourites",
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.purple,
                             ),
-                          ],
-                        );
-                      },
-                    ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.82,
+                        child: ListView.builder(
+                          itemCount: state.podcastdata.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Card(
+                                    clipBehavior: Clip.antiAlias,
+                                    elevation: 8,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        ListTile(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PodcastPlayer(
+                                                  title:
+                                                      '${state.podcastdata[index].title}',
+                                                  artist:
+                                                      '${state.podcastdata[index].artist}',
+                                                  category:
+                                                      '${state.podcastdata[index].category}',
+                                                  image:
+                                                      '${state.podcastdata[index].image}',
+                                                  audio:
+                                                      '${state.podcastdata[index].audio}',
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          leading: CircleAvatar(
+                                            maxRadius: 20,
+                                            backgroundImage: NetworkImage(
+                                                '${state.podcastdata[index].image}'),
+                                          ),
+                                          title: Text(
+                                              '${state.podcastdata[index].title}'),
+                                          subtitle: Text(
+                                              '${state.podcastdata[index].artist}'),
+                                          trailing: PopupMenuButton(
+                                            icon: const Icon(Icons.more_vert),
+                                            itemBuilder:
+                                                (BuildContext context) =>
+                                                    <PopupMenuEntry>[
+                                              PopupMenuItem(
+                                                child: const ListTile(
+                                                  leading: Icon(FontAwesomeIcons
+                                                      .heartCircleCheck),
+                                                  title: Text('Liked'),
+                                                ),
+                                                onTap: () {
+                                                  id =
+                                                      '${state.podcastdata[index].id}';
+                                                  BlocProvider.of<
+                                                              RemoveFavouriteCubit>(
+                                                          context)
+                                                      .remove(id);
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                } else if (state is FavouriteNull) {
+                  EasyLoading.dismiss();
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 250),
+                          child: Text(
+                            "No Favourites",
+                            style:
+                                TextStyle(color: Colors.purple, fontSize: 30),
+                          ),
+                        ),
+                      ),
+                    ],
                   );
                 } else {
                   EasyLoading.dismiss();

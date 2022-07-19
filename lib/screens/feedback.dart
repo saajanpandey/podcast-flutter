@@ -109,6 +109,8 @@ class _FeedBackPageState extends State<FeedBackPage> {
                       height: 20,
                     ),
                     TextFormField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 5,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),

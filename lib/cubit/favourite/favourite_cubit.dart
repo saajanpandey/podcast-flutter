@@ -14,8 +14,10 @@ class FavouriteCubit extends Cubit<FavouriteState> {
 
     try {
       final response = await getIt<ApiService>().favouriteApi();
-      if (response != null) {
-        emit(FavouriteFetched(podcastdata: response));
+      if (response?.length != 0) {
+        if (response != null) {
+          emit(FavouriteFetched(podcastdata: response));
+        }
       } else {
         emit(FavouriteNull());
       }

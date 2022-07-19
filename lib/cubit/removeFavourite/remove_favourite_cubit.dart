@@ -10,6 +10,7 @@ class RemoveFavouriteCubit extends Cubit<RemoveFavouriteState> {
   RemoveFavouriteCubit() : super(RemoveFavouriteInitial());
 
   remove(id) async {
+    emit(RemoveFavouriteFetching());
     final response = await getIt<ApiService>().removeFavourite(id);
     if (response?.status != null) {
       emit(RemoveFavouriteFetched(removeFavouriteModel: response!));

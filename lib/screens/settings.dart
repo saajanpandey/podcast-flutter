@@ -99,40 +99,46 @@ class _SettingsPageState extends State<SettingsPage> {
                       gender = state.authData.gender;
                       email = state.authData.email;
                       if (avatar == 'null' && gender == 1) {
-                        return ListTile(
-                          leading: const CircleAvatar(
-                            radius: 28, // Image radius
-                            backgroundImage:
-                                AssetImage('assets/images/maleAvatar.jpg'),
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 26),
+                          child: ListTile(
+                            leading: const CircleAvatar(
+                              radius: 28, // Image radius
+                              backgroundImage:
+                                  AssetImage('assets/images/maleAvatar.jpg'),
+                            ),
+                            title: Text('$name'),
+                            subtitle: const Text('View Profile'),
+                            trailing: const Icon(FontAwesomeIcons.arrowRight),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfilePage()),
+                              );
+                            },
                           ),
-                          title: Text('$name'),
-                          subtitle: const Text('View Profile'),
-                          trailing: const Icon(FontAwesomeIcons.arrowRight),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfilePage()),
-                            );
-                          },
                         );
                       } else if (avatar == 'null' && gender == 0) {
-                        return ListTile(
-                          leading: const CircleAvatar(
-                            radius: 28, // Image radius
-                            backgroundImage:
-                                AssetImage('assets/images/femaleAvatar.png'),
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 26),
+                          child: ListTile(
+                            leading: const CircleAvatar(
+                              radius: 28, // Image radius
+                              backgroundImage:
+                                  AssetImage('assets/images/femaleAvatar.png'),
+                            ),
+                            title: Text('$name'),
+                            subtitle: const Text('View Profile'),
+                            trailing: const Icon(FontAwesomeIcons.arrowRight),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfilePage()),
+                              );
+                            },
                           ),
-                          title: Text('$name'),
-                          subtitle: const Text('View Profile'),
-                          trailing: const Icon(FontAwesomeIcons.arrowRight),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfilePage()),
-                            );
-                          },
                         );
                       } else {
                         return Padding(
@@ -157,16 +163,19 @@ class _SettingsPageState extends State<SettingsPage> {
                         );
                       }
                     } else {
-                      return ListTile(
-                        style: ListTileStyle.list,
-                        leading: const CircleAvatar(
-                          radius: 28, // Image radius
-                          backgroundImage:
-                              AssetImage('assets/images/maleAvatar.jpg'),
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 24),
+                        child: ListTile(
+                          style: ListTileStyle.list,
+                          leading: const CircleAvatar(
+                            radius: 28, // Image radius
+                            backgroundImage:
+                                AssetImage('assets/images/maleAvatar.jpg'),
+                          ),
+                          title: Text('$name'),
+                          subtitle: const Text('View Profile'),
+                          trailing: const Icon(FontAwesomeIcons.arrowRight),
                         ),
-                        title: Text('$name'),
-                        subtitle: const Text('View Profile'),
-                        trailing: const Icon(FontAwesomeIcons.arrowRight),
                       );
                     }
                   },

@@ -10,6 +10,7 @@ class AddFavouriteCubit extends Cubit<AddFavouriteState> {
   AddFavouriteCubit() : super(AddFavouriteInitial());
 
   postFavourite(podcastId) async {
+    emit(AddFavouriteFetching());
     final response = await getIt<ApiService>().addFavourite(podcastId);
     if (response?.status != null) {
       emit(AddFavouriteFetched(addFavouriteModal: response!));
