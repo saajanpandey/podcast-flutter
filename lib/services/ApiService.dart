@@ -105,7 +105,7 @@ class ApiService {
       var data = LogoutModal.fromJson(response.data);
       return data;
     } catch (e) {
-      print(e);
+      return null;
     }
   }
 
@@ -175,12 +175,11 @@ class ApiService {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $token'
           }));
-
       List<dynamic> list = response.data['data'];
       var returnresponse = list.map((e) => PodcastModal.fromJson(e)).toList();
       return returnresponse;
     } catch (e) {
-      return null;
+      return null; 
     }
   }
 

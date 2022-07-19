@@ -1,7 +1,7 @@
 class PodcastModal {
   int? id;
   String? title;
-  bool? status;
+  int? status;
   String? category;
   String? artist;
   String? image;
