@@ -267,6 +267,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
+                            Text('Age should be greater than 16.'),
                             Text(
                                 'Password should have more than 6 characters.'),
                             Text('Password must contain a special character.'),

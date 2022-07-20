@@ -78,6 +78,7 @@ class _SearchPageState extends State<SearchPage> {
         return Padding(
           padding: const EdgeInsets.all(10),
           child: Card(
+            color: Colors.grey[400],
             clipBehavior: Clip.antiAlias,
             elevation: 8,
             shape: RoundedRectangleBorder(
@@ -152,7 +153,7 @@ class _SearchPageState extends State<SearchPage> {
                 child: AnimSearchBar(
                     helpText: 'Search Podcast...',
                     closeSearchOnSuffixTap: true,
-                    color: Colors.grey[50],
+                    color: Colors.grey[400],
                     rtl: true,
                     width: 400,
                     textController: _filter,

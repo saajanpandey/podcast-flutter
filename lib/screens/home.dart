@@ -1,3 +1,4 @@
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -108,7 +109,8 @@ class _HomePageState extends State<HomePage> {
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 0, 10),
                           child: Text(
-                            "${state.podcastdata[0].name}",
+                            StringUtils.capitalize(
+                                "${state.podcastdata[0].name}"),
                             style: const TextStyle(
                               color: Colors.purple,
                               fontSize: 22,
@@ -127,6 +129,7 @@ class _HomePageState extends State<HomePage> {
                                 Padding(
                                   padding: const EdgeInsets.all(10),
                                   child: Card(
+                                    color: Colors.grey[400],
                                     clipBehavior: Clip.antiAlias,
                                     elevation: 8,
                                     shape: RoundedRectangleBorder(

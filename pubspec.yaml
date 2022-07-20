@@ -51,6 +51,7 @@ dependencies:
   audio_video_progress_bar: ^0.10.0
   just_audio_background: ^0.0.1-beta.7
   anim_search_bar: ^2.0.2
+  basic_utils: ^4.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
