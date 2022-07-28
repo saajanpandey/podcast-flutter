@@ -167,8 +167,28 @@ class _HomePageState extends State<HomePage> {
                                             backgroundImage: NetworkImage(
                                                 '${state.podcastdata[index].image}'),
                                           ),
-                                          subtitle: Text(
-                                              '${state.podcastdata[index].artist}'),
+                                          subtitle: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                  '${state.podcastdata[index].artist}'),
+                                              RichText(
+                                                text: TextSpan(
+                                                  children: [
+                                                    const WidgetSpan(
+                                                      child:
+                                                          Icon(Icons.bar_chart),
+                                                    ),
+                                                    WidgetSpan(
+                                                      child: Text(
+                                                          "${state.podcastdata[index].play}"),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                           title: Text(
                                               '${state.podcastdata[index].title}'),
                                           trailing: PopupMenuButton(

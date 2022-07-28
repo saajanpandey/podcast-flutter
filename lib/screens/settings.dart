@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:podcast/cubit/authUser/authuserdata_cubit.dart';
 import 'package:podcast/cubit/logout/logout_cubit.dart';
+import 'package:podcast/screens/changePassword.dart';
 import 'package:podcast/screens/feedback.dart';
 import 'package:podcast/screens/login.dart';
 import 'package:podcast/screens/profile.dart';
@@ -222,6 +223,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     padding: EdgeInsets.only(left: 35.0),
                     child: Text('Provide Your Feedback'),
                   ),
+                  trailing: const Icon(FontAwesomeIcons.arrowRight),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -231,6 +233,32 @@ class _SettingsPageState extends State<SettingsPage> {
                               )),
                     );
                   },
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChangePassword(),
+                      ),
+                    );
+                  },
+                  leading: const Padding(
+                    padding: EdgeInsets.only(left: 36.0),
+                    child: Icon(
+                      Icons.lock,
+                      color: Colors.purple,
+                    ),
+                  ),
+                  title: const Padding(
+                    padding: EdgeInsets.only(left: 35.0),
+                    child: Text('Change Password'),
+                  ),
+                  subtitle: const Padding(
+                    padding: EdgeInsets.only(left: 35.0),
+                    child: Text('Reset Your Password'),
+                  ),
+                  trailing: const Icon(FontAwesomeIcons.arrowRight),
                 ),
                 // const SizedBox(
                 //   height: 20,

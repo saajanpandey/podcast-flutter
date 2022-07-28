@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:podcast/modal/AddFavouriteModal.dart';
 import 'package:podcast/modal/AuthUserModal.dart';
+import 'package:podcast/modal/ChangePasswordModal.dart';
 import 'package:podcast/modal/FeedbackModal.dart';
 import 'package:podcast/modal/LoginModal.dart';
 import 'package:podcast/modal/LogoutModal.dart';
@@ -179,7 +180,7 @@ class ApiService {
       var returnresponse = list.map((e) => PodcastModal.fromJson(e)).toList();
       return returnresponse;
     } catch (e) {
-      return null; 
+      return null;
     }
   }
 
@@ -280,6 +281,31 @@ class ApiService {
       return response;
     } on DioError catch (e) {
       return e;
+    }
+  }
+
+  Future<ChangePasswordModal?> changePassword(
+      oldPassword, newPassword, confirmPassword) async {
+    var token = await StorageService().getLoginToken();
+    FormData formdata = FormData.fromMap({
+      "current_password": oldPassword,
+      "new_password": newPassword,
+      "new_confirm_password": confirmPassword,
+    });
+    try {
+      var response =
+          await Dio().post('http://10.0.2.2:8000/api/v1/change-password',
+              data: formdata,
+              options: Options(headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer $token'
+              }));
+      var dataResponse = ChangePasswordModal.fromJson(response.data);
+      return dataResponse;
+    } catch (e) {
+      print(e);
+      return null;
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podcast/cubit/addFavourite/add_favourite_cubit.dart';
 import 'package:podcast/cubit/authUser/authuserdata_cubit.dart';
+import 'package:podcast/cubit/changePassword/change_password_cubit.dart';
 import 'package:podcast/cubit/favourite/favourite_cubit.dart';
 import 'package:podcast/cubit/feedback/feedback_cubit.dart';
 import 'package:podcast/cubit/login/login_cubit.dart';
@@ -61,7 +62,8 @@ class BlocDefine extends StatelessWidget {
           BlocProvider(create: (context) => FeedbackCubit()),
           BlocProvider(create: (context) => FavouriteCubit()),
           BlocProvider(create: (context) => RemoveFavouriteCubit()),
-          BlocProvider(create: (context) => AddFavouriteCubit())
+          BlocProvider(create: (context) => AddFavouriteCubit()),
+          BlocProvider(create: (context) => ChangePasswordCubit()),
         ],
         child: const MyApp(),
       ),
