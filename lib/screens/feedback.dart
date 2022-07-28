@@ -28,21 +28,6 @@ class _FeedBackPageState extends State<FeedBackPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text(
-                'Feedback',
-                style: TextStyle(
-                  color: Colors.purple,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           iconTheme: const IconThemeData(
@@ -80,74 +65,93 @@ class _FeedBackPageState extends State<FeedBackPage> {
             }
           },
           child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 100,
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        hintText: 'Please Enter Title.',
-                        labelText: 'Title',
+            child: Column(
+              children: [
+                const Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text(
+                      'Feedback',
+                      style: TextStyle(
+                        color: Colors.purple,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
                       ),
-                      controller: title,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "The title field is required.";
-                        }
-                        return null;
-                      },
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 5,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        hintText: 'Please Enter Message.',
-                        labelText: 'Message',
-                      ),
-                      controller: message,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "The message field is required.";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          primary: Colors.purple,
-                          onPrimary: Colors.white,
-                          fixedSize: const Size(200, 70)),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          BlocProvider.of<FeedbackCubit>(context)
-                              .postFeedback(email, title.text, message.text);
-                        }
-                      },
-                      child: const Text('Send Feedback'),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            hintText: 'Please Enter Title.',
+                            labelText: 'Title',
+                          ),
+                          controller: title,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "The title field is required.";
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            hintText: 'Please Enter Message.',
+                            labelText: 'Message',
+                          ),
+                          controller: message,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "The message field is required.";
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              primary: Colors.purple,
+                              onPrimary: Colors.white,
+                              fixedSize: const Size(200, 70)),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              BlocProvider.of<FeedbackCubit>(context)
+                                  .postFeedback(
+                                      email, title.text, message.text);
+                            }
+                          },
+                          child: const Text('Send Feedback'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
