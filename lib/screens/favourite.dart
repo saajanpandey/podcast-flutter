@@ -97,8 +97,6 @@ class _FavouritesPageState extends State<FavouritesPage> {
                                                       '${state.podcastdata[index].title}',
                                                   artist:
                                                       '${state.podcastdata[index].artist}',
-                                                  category:
-                                                      '${state.podcastdata[index].category}',
                                                   image:
                                                       '${state.podcastdata[index].image}',
                                                   audio:

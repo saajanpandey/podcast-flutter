@@ -124,6 +124,8 @@ class _HomePageState extends State<HomePage> {
                         child: ListView.builder(
                           itemCount: state.podcastdata.length,
                           itemBuilder: (context, index) {
+                            print(
+                                '${state.podcastdata[index].category?.length}');
                             return Column(
                               children: [
                                 Padding(
@@ -152,8 +154,6 @@ class _HomePageState extends State<HomePage> {
                                                       '${state.podcastdata[index].title}',
                                                   artist:
                                                       '${state.podcastdata[index].artist}',
-                                                  category:
-                                                      '${state.podcastdata[index].category}',
                                                   image:
                                                       '${state.podcastdata[index].image}',
                                                   audio:

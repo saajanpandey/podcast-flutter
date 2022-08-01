@@ -8,15 +8,9 @@ class PodcastPlayer extends StatefulWidget {
   final String? image;
   final String? audio;
   final String? artist;
-  final String? category;
 
   const PodcastPlayer(
-      {Key? key,
-      this.title,
-      this.artist,
-      this.category,
-      this.audio,
-      this.image})
+      {Key? key, this.title, this.artist, this.audio, this.image})
       : super(key: key);
 
   @override

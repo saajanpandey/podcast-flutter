@@ -94,7 +94,6 @@ class _SearchPageState extends State<SearchPage> {
                         builder: (context) => PodcastPlayer(
                           title: filteredNames[index]['title'],
                           artist: filteredNames[index]['artist'],
-                          category: filteredNames[index]['category'],
                           image: filteredNames[index]['image'],
                           audio: filteredNames[index]['audio'],
                         ),
