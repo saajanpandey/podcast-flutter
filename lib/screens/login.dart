@@ -212,7 +212,14 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(100, 100, 0, 0),
+                child: Image.asset(
+                  'assets/images/loginlogo.png',
+                  scale: 0.6,
+                ),
+              ),
             ],
           ),
         ),

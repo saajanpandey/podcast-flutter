@@ -124,8 +124,6 @@ class _HomePageState extends State<HomePage> {
                         child: ListView.builder(
                           itemCount: state.podcastdata.length,
                           itemBuilder: (context, index) {
-                            print(
-                                '${state.podcastdata[index].category?.length}');
                             return Column(
                               children: [
                                 Padding(
